@@ -133,7 +133,7 @@ namespace DipGitApi.Controllers
                 var products = new Products();
                 var responseContent = JsonSerializer.Deserialize<List<Product>>(response.Content);
                 products.ProductList = responseContent;
-                return Ok("Total Value of All Products: " + products.GetTotalQtyProducts());
+                return Ok("Total Qty of All Products: " + products.GetTotalQtyProducts());
             }
 
             return NotFound();
