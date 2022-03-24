@@ -95,7 +95,7 @@ namespace DipGitApi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id) {
             var client = new RestClient($"https://diplomagit-e6cc.restdb.io/rest/products/{id}");
             var request = new RestRequest(Method.DELETE);
