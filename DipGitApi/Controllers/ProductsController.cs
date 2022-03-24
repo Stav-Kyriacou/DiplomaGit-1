@@ -121,7 +121,22 @@ namespace DipGitApi.Controllers
         public async Task<IActionResult> GetTotalQty()
         {
             // Read all products and create a Products object.  Use the products object to determine the total qty
-            return BadRequest();
+            var client = new RestClient("https://diplomagit-e6cc.restdb.io/rest/products");
+            var request = new RestRequest()
+            .AddHeader("cache-control", "no-cache")
+            .AddHeader("x-apikey", "35ef07b4da07e33f8da131df3ef7b29b87d9e")
+            .AddHeader("content-type", "application/json");
+            IRestResponse response = await client.ExecuteAsync(request);
+
+            if (response.Content.Contains("_id"))
+            {
+                var products = new Products();
+                var responseContent = JsonSerializer.Deserialize<List<Product>>(response.Content);
+                products.ProductList = responseContent;
+                return Ok("Total Value of All Products: " + products.GetTotalQtyProducts());
+            }
+
+            return NotFound();
         }
 
         /// <summary>
