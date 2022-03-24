@@ -17,12 +17,13 @@ namespace DipGitApi.Controllers
         private RestClient _client;
         private string _accessKey;
 
-        public ProductsController(IConfiguration config) {
+        public ProductsController(IConfiguration config)
+        {
             _config = config;
             _client = new RestClient(_config.GetConnectionString("RestDB_Url"));
             _accessKey = _config.GetConnectionString("key");
         }
-   
+
         /// <summary>
         /// Searches Products for the value of a specific field
         /// </summary>
@@ -30,7 +31,8 @@ namespace DipGitApi.Controllers
         /// <param name="value">value of field</param>
         /// <returns>Object if found</returns>
         [HttpGet("{field}/{value}")]
-        public async Task<IActionResult> SearchProduct(string field, string value) {
+        public async Task<IActionResult> SearchProduct(string field, string value)
+        {
             string search = $"{{\"{field}\":\"{value}\"}}";
 
             var request = new RestRequest();
@@ -40,7 +42,8 @@ namespace DipGitApi.Controllers
             request.AddQueryParameter("q", search);
             var response = await _client.GetAsync(request);
 
-            if(response.Content.Contains("_id")) {
+            if (response.Content.Contains("_id"))
+            {
                 return Ok(response.Content);
             }
 
@@ -52,8 +55,20 @@ namespace DipGitApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll() {
+        public async Task<IActionResult> GetAll()
+        {
             // return all item as a Products object
+            var client = new RestClient("https://diplomagit-e6cc.restdb.io/rest/products");
+            var request = new RestRequest();
+            request.AddHeader("cache-control", "no-cache");
+            request.AddHeader("x-apikey", "35ef07b4da07e33f8da131df3ef7b29b87d9e");
+            request.AddHeader("content-type", "application/json");
+            var response = await client.ExecuteAsync(request);
+
+            if (response.Content.Contains("_id"))
+            {
+                return Ok(response.Content);
+            }
             return BadRequest();
         }
 
@@ -63,7 +78,8 @@ namespace DipGitApi.Controllers
         /// <param name="newProduct"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Add(Product newProduct) {
+        public async Task<IActionResult> Add(Product newProduct)
+        {
             return BadRequest();
         }
 
@@ -73,7 +89,8 @@ namespace DipGitApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IActionResult> Delete(string id) {
+        public async Task<IActionResult> Delete(string id)
+        {
             return BadRequest();
         }
 
@@ -82,7 +99,8 @@ namespace DipGitApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetTotalQty")]
-        public async Task<IActionResult> GetTotalQty() {
+        public async Task<IActionResult> GetTotalQty()
+        {
             // Read all products and create a Products object.  Use the products object to determine the total qty
             return BadRequest();
         }
@@ -92,7 +110,8 @@ namespace DipGitApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetTotalValue")]
-        public async Task<IActionResult> GetTotalValue() {
+        public async Task<IActionResult> GetTotalValue()
+        {
             // Read all products and create a Products object.  Use the products object to determine the total value
             return BadRequest();
         }
