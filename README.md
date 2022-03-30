@@ -26,3 +26,23 @@ Each member of the team should do one of the above tasks
 
 
 _Please be aware that the DB is being used by other groups.  Refrain from interacting with the DB inappropriatley_
+
+# GitFlow
+
+- The database now has a customers table and api
+
+**Customer**
+Username: string
+
+email: string
+
+
+You now need to create an controller and models for user and add to the project
+- create a development branch
+- create a User model and Users if necessary
+- create the controller for user -> GET by username, GET all and POST user are the endpoint required 
+
+- GitFlow must be used
+- main/master will be the production branch
+- pull requests must be used
+- the final merge must be fully functional
